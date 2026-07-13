@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iflads Consult — Data & Business Intelligence Consultancy</title>
+<meta name="description" content="Iflads Consult turns raw data into decisions — BI dashboards, data literacy training, and analytics for nonprofits and businesses in Nigeria and beyond.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111111;
+    --paper:#F7F5F0;
+    --teal:#2FA37D;
+    --mint:#93F4C9;
+    --amber:#D4A24C;
+    --slate:#94A3AD;
+    --ink-70: rgba(17,17,17,0.7);
+    --line: rgba(17,17,17,0.12);
+    --paper-line: rgba(247,245,240,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:500;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* ===== HEADER ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,245,240,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px; max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo span{color:var(--teal);}
+  .logo img{width:34px; height:34px; object-fit:contain; display:block;}
+  footer .logo img{background:var(--paper); border-radius:4px; padding:2px;}
+  .nav-links{display:flex; gap:36px; list-style:none; align-items:center;}
+  .nav-links a{
+    font-size:14px; font-weight:500; text-decoration:none;
+    color:var(--ink); opacity:0.75; transition:opacity .2s;
+  }
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--ink); color:var(--paper);
+    padding:10px 20px; border-radius:2px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--teal);}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .burger span{width:22px; height:2px; background:var(--ink);}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:96px 32px 80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    max-width:1120px; margin:0 auto;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(36px, 5vw, 58px);
+    line-height:1.05;
+    margin:18px 0 24px;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--teal);
+  }
+  .hero p.lede{
+    font-size:18px; color:var(--ink-70); max-width:480px; margin-bottom:36px;
+  }
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink); color:var(--paper);
+    padding:14px 26px; border-radius:2px; text-decoration:none;
+    font-weight:600; font-size:15px; transition:background .2s, transform .2s;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--teal); transform:translateY(-1px);}
+  .btn-secondary{
+    padding:14px 26px; border-radius:2px; text-decoration:none;
+    font-weight:600; font-size:15px; border:1px solid var(--line);
+    display:inline-block; transition:border-color .2s;
+  }
+  .btn-secondary:hover{border-color:var(--ink);}
+
+  /* Hero visual: data-to-insight animation */
+  .viz-frame{
+    background:var(--ink);
+    border-radius:4px;
+    aspect-ratio:1/1;
+    position:relative;
+    overflow:hidden;
+  }
+  .viz-frame .viz-label{
+    position:absolute; top:18px; left:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color:var(--slate); letter-spacing:0.05em;
+  }
+  #dataCanvas{width:100%; height:100%; display:block;}
+
+  /* ===== TRUST STRIP ===== */
+  .trust{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 32px;
+  }
+  .trust-inner{
+    max-width:1120px; margin:0 auto;
+    display:flex; gap:48px; flex-wrap:wrap; justify-content:space-between;
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink-70);
+  }
+  .trust-inner div{display:flex; align-items:baseline; gap:8px;}
+  .trust-inner strong{font-family:'Fraunces', serif; font-size:26px; color:var(--ink); font-weight:600;}
+
+  /* ===== SERVICES ===== */
+  .section{padding:100px 32px;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(28px,3.5vw,40px); margin-top:14px; line-height:1.1;}
+  .section-head p{color:var(--ink-70); font-size:17px; margin-top:16px;}
+
+  .services-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .service-card{
+    background:var(--paper); padding:40px;
+    transition:background .2s;
+  }
+  .service-card:hover{background:#EFEBE1;}
+  .service-num{
+    font-family:'JetBrains Mono', monospace; color:var(--amber);
+    font-size:13px; margin-bottom:20px; display:block;
+  }
+  .service-card h3{font-size:22px; margin-bottom:12px;}
+  .service-card p{color:var(--ink-70); font-size:15px; margin-bottom:16px;}
+  .service-tags{display:flex; gap:8px; flex-wrap:wrap;}
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    background:var(--line); padding:4px 9px; border-radius:2px; color:var(--ink-70);
+  }
+
+  /* ===== APPROACH / DARK BAND ===== */
+  .approach{
+    background:var(--ink); color:var(--paper); padding:100px 32px;
+  }
+  .approach .eyebrow{color:var(--amber);}
+  .approach .section-head h2{color:var(--paper);}
+  .approach .section-head p{color:rgba(247,245,240,0.65);}
+  .approach-steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:32px;
+  }
+  .step{border-top:1px solid var(--paper-line); padding-top:20px;}
+  .step .mono{color:var(--teal); font-size:13px; display:block; margin-bottom:14px;}
+  .step h4{font-family:'Fraunces', serif; font-size:19px; font-weight:600; margin-bottom:10px;}
+  .step p{font-size:14px; color:rgba(247,245,240,0.65); line-height:1.55;}
+
+  /* ===== ABOUT / FOUNDER ===== */
+  .about{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center;
+  }
+  .about-visual{
+    background:linear-gradient(145deg, #2E7D6B 0%, #0B1F2A 100%);
+    border-radius:4px; aspect-ratio:4/5;
+    display:flex; align-items:flex-end; padding:28px;
+  }
+  .about-visual span{
+    font-family:'JetBrains Mono', monospace; color:rgba(247,245,240,0.85);
+    font-size:12px; line-height:1.6;
+  }
+  .about-copy h2{font-size:clamp(26px,3vw,36px); margin-bottom:20px;}
+  .about-copy p{color:var(--ink-70); font-size:16px; margin-bottom:16px;}
+  .about-list{list-style:none; margin-top:24px; display:grid; gap:12px;}
+  .about-list li{display:flex; gap:12px; font-size:15px; align-items:flex-start;}
+  .about-list li::before{
+    content:"—"; color:var(--teal); font-weight:700; flex-shrink:0;
+  }
+
+  /* ===== MISSION / VISION / VALUES ===== */
+  .mvv{background:#EFEBE1;}
+  .mvv-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line); border:1px solid var(--line); margin-bottom:1px;
+  }
+  .mvv-card{background:var(--paper); padding:36px;}
+  .mvv-card h3{
+    font-size:14px; font-family:'JetBrains Mono', monospace; text-transform:uppercase;
+    letter-spacing:0.08em; color:var(--teal); font-weight:600; margin-bottom:14px;
+  }
+  .mvv-card p{font-size:17px; line-height:1.6; font-family:'Fraunces', serif; font-weight:500;}
+  .values-grid{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-top:none;
+  }
+  .value-item{background:var(--paper); padding:24px 20px;}
+  .value-item .mono{
+    color:var(--ink); font-weight:600; font-size:13px; display:block; margin-bottom:10px;
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .value-item p{font-size:13px; color:var(--ink-70); line-height:1.5;}
+
+  /* ===== CONTACT ===== */
+  .contact{
+    background:#EFEBE1; border-top:1px solid var(--line);
+  }
+  .contact-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;
+  }
+  .contact-copy h2{font-size:clamp(28px,3.5vw,42px); margin-bottom:18px;}
+  .contact-copy p{color:var(--ink-70); font-size:17px; margin-bottom:28px; max-width:420px;}
+  .contact-detail{margin-bottom:18px;}
+  .contact-detail .eyebrow{margin-bottom:6px; display:block;}
+  .contact-detail a, .contact-detail span{font-size:16px; font-weight:500; text-decoration:none;}
+  .social-links{display:flex; gap:18px;}
+  .social-links a{
+    font-size:15px; font-weight:600; color:var(--ink); text-decoration:none;
+    border-bottom:2px solid var(--mint); padding-bottom:1px; transition:border-color .2s;
+  }
+  .social-links a:hover{border-color:var(--teal);}
+
+  form{display:grid; gap:16px;}
+  .field label{
+    font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--ink-70); display:block; margin-bottom:8px;
+  }
+  .field input, .field textarea, .field select{
+    width:100%; padding:13px 14px; border:1px solid var(--line); background:var(--paper);
+    font-family:'Inter'; font-size:15px; border-radius:2px; color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:2px solid var(--teal); outline-offset:1px; border-color:var(--teal);
+  }
+  .field textarea{resize:vertical; min-height:110px;}
+  .submit-btn{
+    background:var(--ink); color:var(--paper); border:none;
+    padding:15px 28px; font-weight:600; font-size:15px; border-radius:2px;
+    cursor:pointer; transition:background .2s; justify-self:start;
+  }
+  .submit-btn:hover{background:var(--teal);}
+  .form-note{font-size:13px; color:var(--ink-70); margin-top:4px;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--ink); color:rgba(247,245,240,0.6); padding:40px 32px;
+  }
+  .footer-inner{
+    max-width:1120px; margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    font-size:13px;
+  }
+  .footer-inner .logo{color:var(--paper); font-size:16px;}
+
+  @media (max-width: 860px){
+    .nav-links, .nav-cta{display:none;}
+    .burger{display:flex;}
+    .hero-grid, .about, .contact-inner{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    .approach-steps{grid-template-columns:repeat(2,1fr);}
+    .about-visual{order:-1;}
+    .mvv-grid{grid-template-columns:1fr;}
+    .values-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo"><img src="assets/logo.png" alt="Iflads Consult logo">iflads<span>.</span>consult</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'; document.querySelector('.nav-links').style.cssText += 'flex-direction:column; position:absolute; top:70px; right:32px; background:#F7F5F0; padding:20px 28px; border:1px solid rgba(11,31,42,0.12); gap:18px;'">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">Training & Consulting Firm</span>
+      <h1>Bridging knowledge gaps with <em>future-ready</em> skills.</h1>
+      <p class="lede">Iflads Consult equips professionals and organizations with the technical, analytical, and digital skills the future of work demands — through hands-on training, expert consulting, and inclusive learning experiences.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="#programs" class="btn-secondary">See our programs</a>
+      </div>
+    </div>
+    <div class="viz-frame">
+      <span class="viz-label">// live_dashboard_preview</span>
+      <canvas id="dataCanvas"></canvas>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-inner">
+    <div><strong>4</strong>&nbsp;core practice areas — consulting, analytics, research, training</div>
+    <div><strong>7+</strong>&nbsp;technical tools covered in hands-on training programs</div>
+    <div><strong>5</strong>&nbsp;core values driving every learning experience</div>
+  </div>
+</div>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we do</span>
+      <h2>Four ways we build future-ready skills.</h2>
+      <p>From strategic consulting to hands-on training, every engagement is built around the skills the future of work actually demands.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <h3>Tech Consultancy Services</h3>
+        <p>Strategic guidance for organizations navigating digital transformation, data systems, and process automation.</p>
+        <div class="service-tags"><span class="tag">Strategy</span><span class="tag">Automation</span><span class="tag">Systems</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <h3>Data Analytics & Data Science</h3>
+        <p>End-to-end analytics support — from data modeling and dashboards to predictive analysis that informs real decisions.</p>
+        <div class="service-tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Python</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <h3>Qualitative Research</h3>
+        <p>Rigorous qualitative research and coding support using NVivo and ATLAS.ti, for academic, nonprofit, and public health work.</p>
+        <div class="service-tags"><span class="tag">NVivo</span><span class="tag">ATLAS.ti</span><span class="tag">M&E</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">04</span>
+        <h3>Career Development & Training</h3>
+        <p>Professional training and career development programs that turn technical potential into job-ready capability.</p>
+        <div class="service-tags"><span class="tag">Training</span><span class="tag">Mentorship</span><span class="tag">Workshops</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="approach" id="programs">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Current programs</span>
+      <h2>Hands-on training, built for the tools employers actually use.</h2>
+      <p>Structured learning tracks and community initiatives, open to individuals, teams, and organizations.</p>
+    </div>
+    <div class="approach-steps">
+      <div class="step">
+        <span class="mono">Technical Skills</span>
+        <h4>Hands-on Training</h4>
+        <p>Power BI, Excel, SQL, R, Python, Automation Fundamentals, AI, and Data Governance.</p>
+      </div>
+      <div class="step">
+        <span class="mono">Career Growth</span>
+        <h4>Career Development & Data Storytelling</h4>
+        <p>Workshops that turn technical output into a story stakeholders can actually act on.</p>
+      </div>
+      <div class="step">
+        <span class="mono">Community</span>
+        <h4>Learning & Mentorship</h4>
+        <p>Peer learning and mentorship initiatives for people building a career in data and tech.</p>
+      </div>
+      <div class="step">
+        <span class="mono">Consulting</span>
+        <h4>Advisory Engagements</h4>
+        <p>Tech consultancy and data science support for organizations building in-house capability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="about-visual">
+    <span>who_we_are.log<br>firm: Iflads Consult<br>focus: training, consulting, data<br>base: Abuja, Nigeria</span>
+  </div>
+  <div class="about-copy">
+    <span class="eyebrow">Who we are</span>
+    <h2>A dynamic training and consulting firm, built to close the skills gap.</h2>
+    <p>IFLADS is a dynamic training and consulting firm dedicated to bridging knowledge gaps and empowering professionals with future-ready skills. We work with individuals, professionals, and organizations across tech consultancy, data analytics, qualitative research, and career development.</p>
+    <ul class="about-list">
+      <li>Hands-on training across Power BI, Excel, SQL, R, Python, automation, AI, and data governance</li>
+      <li>Qualitative research support using NVivo and ATLAS.ti for academic, nonprofit, and public health work</li>
+      <li>Community learning and mentorship initiatives for early-career and aspiring data professionals</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section mvv">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Mission, vision & values</span>
+      <h2>What we're building toward.</h2>
+    </div>
+    <div class="mvv-grid">
+      <div class="mvv-card">
+        <h3>Mission</h3>
+        <p>To bridge knowledge and opportunity gaps by equipping individuals, professionals, and organizations with in-demand skills through impactful training, expert consulting, and inclusive learning experiences.</p>
+      </div>
+      <div class="mvv-card">
+        <h3>Vision</h3>
+        <p>To become Africa's leading hub for future-ready talent, driving transformation through data-driven insight, digital fluency, and empowered communities.</p>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-item">
+        <span class="mono">Innovation</span>
+        <p>We embrace forward-thinking solutions that prepare learners for tomorrow's challenges.</p>
+      </div>
+      <div class="value-item">
+        <span class="mono">Excellence</span>
+        <p>We strive for quality and relevance in every learning and consulting experience.</p>
+      </div>
+      <div class="value-item">
+        <span class="mono">Empowerment</span>
+        <p>We are committed to helping people unlock their full potential through accessible, inclusive education.</p>
+      </div>
+      <div class="value-item">
+        <span class="mono">Integrity</span>
+        <p>We act with honesty, transparency, and a deep respect for our community.</p>
+      </div>
+      <div class="value-item">
+        <span class="mono">Collaboration</span>
+        <p>We grow stronger together by connecting people, ideas, and opportunities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="wrap contact-inner">
+    <div class="contact-copy">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Tell us what you're trying to decide.</h2>
+      <p>Whether it's a dashboard, a training program, or a first pass at your data — we'll reply with next steps, not a sales pitch.</p>
+      <div class="contact-detail">
+        <span class="eyebrow">Email</span>
+        <a href="mailto:ifladsconsult@gmail.com">ifladsconsult@gmail.com</a>
+      </div>
+      <div class="contact-detail">
+        <span class="eyebrow">Location</span>
+        <span>Abuja, Nigeria — working with clients remotely worldwide</span>
+      </div>
+      <div class="contact-detail">
+        <span class="eyebrow">Follow us</span>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/company/ifladsconsult/" target="_blank" rel="noopener">LinkedIn</a>
+          <span>Instagram @IfladsConsult</span>
+          <span>TikTok @IfladsConsult</span>
+        </div>
+      </div>
+    </div>
+    <form onsubmit="event.preventDefault(); document.getElementById('formStatus').textContent='Thanks — this is a preview form. Connect it to an email service before going live.';">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="field">
+        <label for="interest">I'm interested in</label>
+        <select id="interest">
+          <option>Tech Consultancy Services</option>
+          <option>Data Analytics & Data Science</option>
+          <option>Qualitative Research (NVivo/ATLAS.ti)</option>
+          <option>Career Development & Training</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send message</button>
+      <p class="form-note" id="formStatus">We usually reply within 2 business days.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo"><img src="assets/logo.png" alt="Iflads Consult logo">iflads.consult</div>
+    <div>© 2026 Iflads Consult. All rights reserved. · ifladsconsult@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+// Data-to-insight hero animation: scattered points organize into a bar chart
+const canvas = document.getElementById('dataCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, DPR;
+
+function resize(){
+  DPR = window.devicePixelRatio || 1;
+  W = canvas.clientWidth;
+  H = canvas.clientHeight;
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+const barCount = 7;
+const barValues = [0.4, 0.65, 0.35, 0.85, 0.55, 0.95, 0.5];
+const colors = ['#93F4C9','#2FA37D','#D4A24C'];
+let points = [];
+
+function initPoints(){
+  points = [];
+  const margin = 40;
+  const chartW = W - margin*2;
+  const chartH = H - margin*2;
+  const gap = chartW / barCount;
+  for(let i=0;i<barCount;i++){
+    const targetH = barValues[i] * chartH;
+    const targetX = margin + i*gap + gap*0.25;
+    const targetW = gap*0.5;
+    const targetY = H - margin - targetH;
+    const dotsInBar = 14;
+    for(let j=0;j<dotsInBar;j++){
+      points.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        tx: targetX + Math.random()*targetW,
+        ty: targetY + Math.random()*targetH,
+        color: colors[i % colors.length],
+        r: 1.6 + Math.random()*1.4,
+        delay: Math.random()*0.4
+      });
+    }
+  }
+}
+initPoints();
+
+let start = null;
+const duration = 1900;
+
+function draw(ts){
+  if(!start) start = ts;
+  const elapsed = (ts - start)/1000;
+
+  ctx.clearRect(0,0,W,H);
+
+  // baseline
+  ctx.strokeStyle = 'rgba(247,245,240,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(40, H-40);
+  ctx.lineTo(W-40, H-40);
+  ctx.stroke();
+
+  points.forEach(p=>{
+    let t = Math.min(1, Math.max(0, (elapsed - p.delay) / (duration/1000)));
+    t = 1 - Math.pow(1-t, 3); // ease out cubic
+    const x = p.x + (p.tx - p.x) * t;
+    const y = p.y + (p.ty - p.y) * t;
+    ctx.beginPath();
+    ctx.arc(x, y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = 0.55 + 0.45*t;
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  if(elapsed < (duration/1000) + 0.5){
+    requestAnimationFrame(draw);
+  } else {
+    // settle into gentle idle float
+    idleFloat();
+  }
+}
+
+function idleFloat(){
+  let t0 = performance.now();
+  function loop(ts){
+    const dt = (ts - t0)/1000;
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = 'rgba(247,245,240,0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(40, H-40);
+    ctx.lineTo(W-40, H-40);
+    ctx.stroke();
+    points.forEach((p,i)=>{
+      const floatY = Math.sin(dt*0.8 + i*0.3)*1.5;
+      ctx.beginPath();
+      ctx.arc(p.tx, p.ty+floatY, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 1;
+      ctx.fill();
+    });
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(prefersReduced){
+  idleFloat();
+} else {
+  requestAnimationFrame(draw);
+}
+</script>
+
+</body>
+</html>

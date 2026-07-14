@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -41,7 +41,7 @@
     font-weight:500;
   }
   .mono{font-family:'JetBrains Mono', monospace;}
-
+ 
   /* ===== HEADER ===== */
   header{
     position:sticky; top:0; z-index:50;
@@ -78,7 +78,7 @@
   .nav-cta:hover{background:var(--teal);}
   .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
   .burger span{width:22px; height:2px; background:var(--ink);}
-
+ 
   /* ===== HERO ===== */
   .hero{
     padding:96px 32px 80px;
@@ -114,22 +114,81 @@
     display:inline-block; transition:border-color .2s;
   }
   .btn-secondary:hover{border-color:var(--ink);}
-
-  /* Hero visual: data-to-insight animation */
+ 
+  /* Hero visual: sales performance dashboard mockup */
   .viz-frame{
     background:var(--ink);
-    border-radius:4px;
+    border-radius:6px;
     aspect-ratio:1/1;
     position:relative;
     overflow:hidden;
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
   }
   .viz-frame .viz-label{
-    position:absolute; top:18px; left:20px;
     font-family:'JetBrains Mono', monospace;
     font-size:11px; color:var(--slate); letter-spacing:0.05em;
+    display:flex; justify-content:space-between; align-items:center;
   }
-  #dataCanvas{width:100%; height:100%; display:block;}
-
+  .viz-live{
+    display:inline-flex; align-items:center; gap:6px; color:var(--mint);
+  }
+  .viz-live .dot{
+    width:6px; height:6px; border-radius:50%; background:var(--mint);
+    animation: pulseDot 1.6s ease-in-out infinite;
+  }
+  @keyframes pulseDot{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+ 
+  .kpi-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  .kpi-card{
+    background:rgba(247,245,240,0.05); border:1px solid var(--paper-line);
+    border-radius:4px; padding:12px 12px;
+  }
+  .kpi-card .kpi-label{
+    font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:6px;
+  }
+  .kpi-card .kpi-value{
+    font-family:'Fraunces', serif; font-weight:600; font-size:19px; color:var(--paper);
+    display:block;
+  }
+  .kpi-card .kpi-delta{
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--mint); margin-top:4px; display:block;
+  }
+  .kpi-card .kpi-delta.down{color:#E29A8A;}
+ 
+  .chart-panel{
+    background:rgba(247,245,240,0.04); border:1px solid var(--paper-line);
+    border-radius:4px; padding:16px; flex:1; display:flex; flex-direction:column;
+  }
+  .chart-panel-title{
+    font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--slate);
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px;
+  }
+  .trend-path{
+    fill:none; stroke:var(--mint); stroke-width:2.5;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation: drawLine 2.2s ease-out forwards 0.3s;
+  }
+  .trend-fill{
+    opacity:0; animation: fadeInArea 1s ease-out forwards 1.6s;
+  }
+  @keyframes drawLine{ to{ stroke-dashoffset:0; } }
+  @keyframes fadeInArea{ to{ opacity:1; } }
+ 
+  .region-bars{display:flex; align-items:flex-end; gap:10px; height:70px; margin-top:14px;}
+  .region-bars .bar-col{flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;}
+  .region-bars .bar{
+    width:100%; border-radius:2px 2px 0 0; transform:scaleY(0); transform-origin:bottom;
+    animation: growBar 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .region-bars .bar-label{
+    font-family:'JetBrains Mono', monospace; font-size:9px; color:var(--slate);
+  }
+  @keyframes growBar{ to{ transform:scaleY(1); } }
+ 
   /* ===== TRUST STRIP ===== */
   .trust{
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
@@ -142,13 +201,48 @@
   }
   .trust-inner div{display:flex; align-items:baseline; gap:8px;}
   .trust-inner strong{font-family:'Fraunces', serif; font-size:26px; color:var(--ink); font-weight:600;}
-
+ 
+  /* ===== WHO WE WORK WITH ===== */
+  .work-with{background:var(--paper);}
+  .partner-categories{
+    display:grid; gap:0; border-top:1px solid var(--line);
+  }
+  .partner-cat{
+    display:grid; grid-template-columns:60px 1fr 1.2fr; gap:32px;
+    padding:32px 0; border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .partner-cat-num{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--amber); font-weight:600;
+  }
+  .partner-cat-title h3{font-size:19px; margin-bottom:8px;}
+  .partner-cat-title p{font-size:14px; color:var(--ink-70); line-height:1.55;}
+  .partner-cat-names{
+    display:flex; flex-wrap:wrap; gap:10px; align-content:flex-start;
+  }
+  .partner-name-chip{
+    font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:600;
+    background:#EFEBE1; border:1px solid var(--line); border-radius:3px;
+    padding:8px 14px;
+  }
+  .partner-name-chip.filled{
+    background:var(--ink); color:var(--mint); border-color:var(--ink);
+  }
+  .partner-cta{
+    margin-top:36px; padding:28px; background:#EFEBE1; border-radius:4px;
+    display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .partner-cta p{font-family:'Fraunces', serif; font-size:19px; font-weight:600; max-width:440px;}
+  @media (max-width:700px){
+    .partner-cat{grid-template-columns:1fr; gap:10px;}
+  }
+ 
   /* ===== SERVICES ===== */
   .section{padding:100px 32px;}
   .section-head{max-width:640px; margin-bottom:56px;}
   .section-head h2{font-size:clamp(28px,3.5vw,40px); margin-top:14px; line-height:1.1;}
   .section-head p{color:var(--ink-70); font-size:17px; margin-top:16px;}
-
+ 
   .services-grid{
     display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
     background:var(--line); border:1px solid var(--line);
@@ -169,7 +263,7 @@
     font-family:'JetBrains Mono', monospace; font-size:11px;
     background:var(--line); padding:4px 9px; border-radius:2px; color:var(--ink-70);
   }
-
+ 
   /* ===== APPROACH / DARK BAND ===== */
   .approach{
     background:var(--ink); color:var(--paper); padding:100px 32px;
@@ -184,19 +278,15 @@
   .step .mono{color:var(--teal); font-size:13px; display:block; margin-bottom:14px;}
   .step h4{font-family:'Fraunces', serif; font-size:19px; font-weight:600; margin-bottom:10px;}
   .step p{font-size:14px; color:rgba(247,245,240,0.65); line-height:1.55;}
-
+ 
   /* ===== ABOUT / FOUNDER ===== */
   .about{
     display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center;
   }
   .about-visual{
-    background:linear-gradient(145deg, #2E7D6B 0%, #0B1F2A 100%);
-    border-radius:4px; aspect-ratio:4/5;
-    display:flex; align-items:flex-end; padding:28px;
-  }
-  .about-visual span{
-    font-family:'JetBrains Mono', monospace; color:rgba(247,245,240,0.85);
-    font-size:12px; line-height:1.6;
+    background:#111111;
+    border-radius:6px; aspect-ratio:4/5;
+    overflow:hidden;
   }
   .about-copy h2{font-size:clamp(26px,3vw,36px); margin-bottom:20px;}
   .about-copy p{color:var(--ink-70); font-size:16px; margin-bottom:16px;}
@@ -205,7 +295,7 @@
   .about-list li::before{
     content:"—"; color:var(--teal); font-weight:700; flex-shrink:0;
   }
-
+ 
   /* ===== MISSION / VISION / VALUES ===== */
   .mvv{background:#EFEBE1;}
   .mvv-grid{
@@ -228,7 +318,7 @@
     text-transform:uppercase; letter-spacing:0.04em;
   }
   .value-item p{font-size:13px; color:var(--ink-70); line-height:1.5;}
-
+ 
   /* ===== CONTACT ===== */
   .contact{
     background:#EFEBE1; border-top:1px solid var(--line);
@@ -247,7 +337,7 @@
     border-bottom:2px solid var(--mint); padding-bottom:1px; transition:border-color .2s;
   }
   .social-links a:hover{border-color:var(--teal);}
-
+ 
   form{display:grid; gap:16px;}
   .field label{
     font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase;
@@ -268,7 +358,7 @@
   }
   .submit-btn:hover{background:var(--teal);}
   .form-note{font-size:13px; color:var(--ink-70); margin-top:4px;}
-
+ 
   /* ===== FOOTER ===== */
   footer{
     background:var(--ink); color:rgba(247,245,240,0.6); padding:40px 32px;
@@ -279,7 +369,7 @@
     font-size:13px;
   }
   .footer-inner .logo{color:var(--paper); font-size:16px;}
-
+ 
   @media (max-width: 860px){
     .nav-links, .nav-cta{display:none;}
     .burger{display:flex;}
@@ -296,13 +386,14 @@
 </style>
 </head>
 <body>
-
+ 
 <header>
   <nav class="nav">
     <div class="logo"><img src="assets/logo.png" alt="Iflads Consult logo">iflads<span>.</span>consult</div>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#programs">Programs</a></li>
+      <li><a href="#partners">Partners</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -312,7 +403,7 @@
     </button>
   </nav>
 </header>
-
+ 
 <section class="hero">
   <div class="hero-grid">
     <div>
@@ -325,12 +416,54 @@
       </div>
     </div>
     <div class="viz-frame">
-      <span class="viz-label">// live_dashboard_preview</span>
-      <canvas id="dataCanvas"></canvas>
+      <div class="viz-label">
+        <span>SALES PERFORMANCE · Q3</span>
+        <span class="viz-live"><span class="dot"></span>LIVE</span>
+      </div>
+ 
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <span class="kpi-label">Revenue</span>
+          <span class="kpi-value">₦48.2M</span>
+          <span class="kpi-delta">▲ 18.4%</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Deals Closed</span>
+          <span class="kpi-value">312</span>
+          <span class="kpi-delta">▲ 9.1%</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Churn</span>
+          <span class="kpi-value">2.6%</span>
+          <span class="kpi-delta down">▼ 0.8%</span>
+        </div>
+      </div>
+ 
+      <div class="chart-panel">
+        <span class="chart-panel-title">Revenue Trend — Last 6 Months</span>
+        <svg viewBox="0 0 300 90" preserveAspectRatio="none" style="width:100%; height:90px;">
+          <path class="trend-fill" d="M0,70 L50,58 L100,62 L150,40 L200,44 L250,20 L300,14 L300,90 L0,90 Z" fill="url(#trendGrad)"/>
+          <path class="trend-path" d="M0,70 L50,58 L100,62 L150,40 L200,44 L250,20 L300,14"/>
+          <defs>
+            <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#93F4C9" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#93F4C9" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+ 
+        <span class="chart-panel-title" style="margin-top:14px;">Revenue by Region</span>
+        <div class="region-bars">
+          <div class="bar-col"><div class="bar" style="height:55%; background:#93F4C9; animation-delay:0.4s;"></div><span class="bar-label">NG-W</span></div>
+          <div class="bar-col"><div class="bar" style="height:80%; background:#2FA37D; animation-delay:0.55s;"></div><span class="bar-label">NG-N</span></div>
+          <div class="bar-col"><div class="bar" style="height:40%; background:#D4A24C; animation-delay:0.7s;"></div><span class="bar-label">NG-E</span></div>
+          <div class="bar-col"><div class="bar" style="height:95%; background:#93F4C9; animation-delay:0.85s;"></div><span class="bar-label">NG-S</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
+ 
 <div class="trust">
   <div class="trust-inner">
     <div><strong>4</strong>&nbsp;core practice areas — consulting, analytics, research, training</div>
@@ -338,7 +471,9 @@
     <div><strong>5</strong>&nbsp;core values driving every learning experience</div>
   </div>
 </div>
-
+ 
+ 
+ 
 <section class="section" id="services">
   <div class="wrap">
     <div class="section-head">
@@ -374,7 +509,7 @@
     </div>
   </div>
 </section>
-
+ 
 <section class="approach" id="programs">
   <div class="wrap">
     <div class="section-head">
@@ -406,10 +541,72 @@
     </div>
   </div>
 </section>
-
+ 
 <section class="section about" id="about">
   <div class="about-visual">
-    <span>who_we_are.log<br>firm: Iflads Consult<br>focus: training, consulting, data<br>base: Abuja, Nigeria</span>
+    <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <rect width="400" height="460" fill="#111111"/>
+      <!-- floor / desk -->
+      <rect x="0" y="360" width="400" height="100" fill="#1B1B1B"/>
+      <rect x="30" y="330" width="340" height="18" rx="3" fill="#232323"/>
+ 
+      <!-- Person 1 (left) -->
+      <g>
+        <rect x="55" y="245" width="70" height="88" rx="14" fill="#93F4C9"/>
+        <circle cx="90" cy="215" r="30" fill="#F7F5F0"/>
+        <rect x="70" y="180" width="40" height="28" rx="14" fill="#111111"/>
+        <!-- laptop -->
+        <rect x="60" y="300" width="66" height="6" rx="2" fill="#111111"/>
+        <rect x="70" y="272" width="46" height="30" rx="2" fill="#2FA37D"/>
+        <rect x="74" y="276" width="38" height="22" fill="#111111"/>
+        <rect x="78" y="280" width="26" height="3" fill="#93F4C9"/>
+        <rect x="78" y="286" width="18" height="3" fill="#93F4C9" opacity="0.6"/>
+      </g>
+ 
+      <!-- Person 2 (center, taller) -->
+      <g>
+        <rect x="160" y="215" width="80" height="118" rx="16" fill="#2FA37D"/>
+        <circle cx="200" cy="180" r="34" fill="#F7F5F0"/>
+        <rect x="176" y="140" width="48" height="32" rx="16" fill="#111111"/>
+        <!-- laptop -->
+        <rect x="164" y="300" width="74" height="6" rx="2" fill="#111111"/>
+        <rect x="176" y="266" width="52" height="34" rx="2" fill="#D4A24C"/>
+        <rect x="180" y="270" width="44" height="26" fill="#111111"/>
+        <polyline points="184,290 192,278 200,284 210,270 220,274" fill="none" stroke="#93F4C9" stroke-width="2"/>
+      </g>
+ 
+      <!-- Person 3 (right) -->
+      <g>
+        <rect x="275" y="250" width="68" height="83" rx="14" fill="#D4A24C"/>
+        <circle cx="309" cy="222" r="28" fill="#F7F5F0"/>
+        <rect x="290" y="188" width="38" height="26" rx="13" fill="#111111"/>
+        <!-- tablet in hand -->
+        <rect x="330" y="255" width="26" height="36" rx="3" fill="#111111" transform="rotate(8 330 255)"/>
+        <rect x="333" y="259" width="20" height="28" fill="#93F4C9" transform="rotate(8 330 255)" opacity="0.85"/>
+      </g>
+ 
+      <!-- plant -->
+      <g>
+        <rect x="20" y="300" width="18" height="30" rx="2" fill="#232323"/>
+        <path d="M29,300 C15,285 15,265 29,255 C43,265 43,285 29,300 Z" fill="#2FA37D"/>
+        <path d="M29,300 C20,290 20,275 29,268 C38,275 38,290 29,300 Z" fill="#93F4C9" opacity="0.7"/>
+      </g>
+ 
+      <!-- floating chart card, top right -->
+      <g>
+        <rect x="270" y="40" width="100" height="70" rx="8" fill="#1B1B1B" stroke="#93F4C9" stroke-opacity="0.25"/>
+        <text x="282" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#94A3AD">GROWTH</text>
+        <polyline points="282,95 300,80 316,86 334,64 352,70" fill="none" stroke="#93F4C9" stroke-width="2.5"/>
+        <circle cx="352" cy="70" r="3" fill="#93F4C9"/>
+      </g>
+ 
+      <!-- floating badge, top left -->
+      <g>
+        <rect x="30" y="55" width="86" height="46" rx="8" fill="#1B1B1B" stroke="#D4A24C" stroke-opacity="0.3"/>
+        <text x="42" y="74" font-family="JetBrains Mono, monospace" font-size="9" fill="#94A3AD">TEAM</text>
+        <text x="42" y="91" font-family="Fraunces, serif" font-size="16" font-weight="600" fill="#F7F5F0">Iflads</text>
+      </g>
+    </svg>
   </div>
   <div class="about-copy">
     <span class="eyebrow">Who we are</span>
@@ -422,7 +619,7 @@
     </ul>
   </div>
 </section>
-
+ 
 <section class="section mvv">
   <div class="wrap">
     <div class="section-head">
@@ -463,7 +660,33 @@
     </div>
   </div>
 </section>
-
+ 
+<section class="section work-with" id="partners">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Partners & Supporters</span>
+      <h2>Who We Work With</h2>
+      <p>Our training and consulting work is strengthened by partnerships with institutions and organizations who share our commitment to building future-ready skills.</p>
+    </div>
+    <div class="partner-categories">
+      <div class="partner-cat">
+        <span class="partner-cat-num">01</span>
+        <div class="partner-cat-title">
+          <h3>Institutional Partners</h3>
+          <p>Associations and organizations that support our training reach and student community.</p>
+        </div>
+        <div class="partner-cat-names">
+          <span class="partner-name-chip filled">NUASA</span>
+        </div>
+      </div>
+    </div>
+    <div class="partner-cta">
+      <p>Interested in partnering with Iflads Consult on training, research, or outreach?</p>
+      <a href="#contact" class="btn-primary">Become a partner</a>
+    </div>
+  </div>
+</section>
+ 
 <section class="section contact" id="contact">
   <div class="wrap contact-inner">
     <div class="contact-copy">
@@ -515,132 +738,15 @@
     </form>
   </div>
 </section>
-
+ 
 <footer>
   <div class="footer-inner">
     <div class="logo"><img src="assets/logo.png" alt="Iflads Consult logo">iflads.consult</div>
     <div>© 2026 Iflads Consult. All rights reserved. · ifladsconsult@gmail.com</div>
   </div>
 </footer>
-
-<script>
-// Data-to-insight hero animation: scattered points organize into a bar chart
-const canvas = document.getElementById('dataCanvas');
-const ctx = canvas.getContext('2d');
-let W, H, DPR;
-
-function resize(){
-  DPR = window.devicePixelRatio || 1;
-  W = canvas.clientWidth;
-  H = canvas.clientHeight;
-  canvas.width = W * DPR;
-  canvas.height = H * DPR;
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-}
-window.addEventListener('resize', resize);
-resize();
-
-const barCount = 7;
-const barValues = [0.4, 0.65, 0.35, 0.85, 0.55, 0.95, 0.5];
-const colors = ['#93F4C9','#2FA37D','#D4A24C'];
-let points = [];
-
-function initPoints(){
-  points = [];
-  const margin = 40;
-  const chartW = W - margin*2;
-  const chartH = H - margin*2;
-  const gap = chartW / barCount;
-  for(let i=0;i<barCount;i++){
-    const targetH = barValues[i] * chartH;
-    const targetX = margin + i*gap + gap*0.25;
-    const targetW = gap*0.5;
-    const targetY = H - margin - targetH;
-    const dotsInBar = 14;
-    for(let j=0;j<dotsInBar;j++){
-      points.push({
-        x: Math.random()*W,
-        y: Math.random()*H,
-        tx: targetX + Math.random()*targetW,
-        ty: targetY + Math.random()*targetH,
-        color: colors[i % colors.length],
-        r: 1.6 + Math.random()*1.4,
-        delay: Math.random()*0.4
-      });
-    }
-  }
-}
-initPoints();
-
-let start = null;
-const duration = 1900;
-
-function draw(ts){
-  if(!start) start = ts;
-  const elapsed = (ts - start)/1000;
-
-  ctx.clearRect(0,0,W,H);
-
-  // baseline
-  ctx.strokeStyle = 'rgba(247,245,240,0.15)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(40, H-40);
-  ctx.lineTo(W-40, H-40);
-  ctx.stroke();
-
-  points.forEach(p=>{
-    let t = Math.min(1, Math.max(0, (elapsed - p.delay) / (duration/1000)));
-    t = 1 - Math.pow(1-t, 3); // ease out cubic
-    const x = p.x + (p.tx - p.x) * t;
-    const y = p.y + (p.ty - p.y) * t;
-    ctx.beginPath();
-    ctx.arc(x, y, p.r, 0, Math.PI*2);
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = 0.55 + 0.45*t;
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-
-  if(elapsed < (duration/1000) + 0.5){
-    requestAnimationFrame(draw);
-  } else {
-    // settle into gentle idle float
-    idleFloat();
-  }
-}
-
-function idleFloat(){
-  let t0 = performance.now();
-  function loop(ts){
-    const dt = (ts - t0)/1000;
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle = 'rgba(247,245,240,0.15)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(40, H-40);
-    ctx.lineTo(W-40, H-40);
-    ctx.stroke();
-    points.forEach((p,i)=>{
-      const floatY = Math.sin(dt*0.8 + i*0.3)*1.5;
-      ctx.beginPath();
-      ctx.arc(p.tx, p.ty+floatY, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.color;
-      ctx.globalAlpha = 1;
-      ctx.fill();
-    });
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-}
-
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){
-  idleFloat();
-} else {
-  requestAnimationFrame(draw);
-}
-</script>
-
+ 
+ 
 </body>
 </html>
+ 
